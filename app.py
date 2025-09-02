@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, jsonify, url_for, session
 
 
 app = Flask(__name__)
-app.secret_key = 'kunci-rahasia-super-acak-untuk-proyek-va'
+app.secret_key = 'supersecret'
 
 PIPER_PATH = os.path.join("piper", "piper")
 MODEL_PATH = os.path.join("piper", "models", "en_US-amy-low.onnx")
