@@ -35,19 +35,14 @@
 <body class="bg-gray-200">
 
     <div class="w-screen h-screen flex flex-row">
-        <!-- Kolom Kiri: Latar Belakang untuk Avatar -->
         <div class="w-3/5 h-full bg-cover bg-center" style="background-image: url('https://images2.alphacoders.com/762/762399.jpg');">
-            <!-- Widget Live2D akan mengambang di atas area ini -->
         </div>
 
-        <!-- Kolom Kanan: Jendela Chat -->
         <div class="w-2/5 h-full bg-white flex flex-col shadow-2xl">
-            <!-- Header Chat -->
             <div class="p-4 border-b border-gray-200">
                 <h1 class="text-xl font-bold text-gray-800 text-center">Chat</h1>
             </div>
 
-            <!-- Kontainer Pesan -->
             <div id="chat-container" class="flex-1 p-6 overflow-y-auto space-y-4">
                 <div class="flex justify-start">
                     <div class="bg-gray-100 text-gray-800 max-w-lg p-3 rounded-lg rounded-bl-none shadow-sm">
@@ -56,7 +51,6 @@
                 </div>
             </div>
 
-            <!-- Formulir Input -->
             <div class="p-4 border-t border-gray-200 bg-gray-50">
                 <form id="prompt-form" class="flex items-center space-x-3">
                     <input type="text" id="prompt-input" placeholder="Type your message here..."
@@ -69,39 +63,33 @@
             </div>
         </div>
     </div>
-    
+ 
     <audio id="response-audio" style="display: none;"></audio>
-    
-    <!-- Plugin L2Dwidget -->
+ 
     <script src="https://cdn.jsdelivr.net/npm/live2d-widget@3.1.4/lib/L2Dwidget.min.js"></script>
-    
     <script>
-        // --- Inisialisasi Plugin Live2D ---
         L2Dwidget.init({
             "model": {
                 "jsonPath": "https://cdn.jsdelivr.net/npm/live2d-widget-model-hijiki@1.0.5/assets/hijiki.model.json",
             },
             "display": {
-                "position": "left", // Mengatur posisi widget di sisi kiri
+                "position": "left", 
                 "width": 400, 
                 "height": 550,
-                "hOffset": 200, // Jarak horizontal dari tepi
-                "vOffset": -20  // Jarak vertikal dari tepi
+                "hOffset": 200, 
+                "vOffset": -20  
             },
             "mobile": { "show": true, "scale": 0.4 },
             "react": { "opacityDefault": 1 }
         });
 
-        // --- Elemen DOM ---
         const form = document.getElementById('prompt-form');
         const input = document.getElementById('prompt-input');
         const submitButton = document.getElementById('submit-button');
         const chatContainer = document.getElementById('chat-container');
         const audioPlayer = document.getElementById('response-audio');
-        
         let live2dCanvas = null;
 
-        // Cek berkala hingga canvas ditemukan
         const findCanvasInterval = setInterval(() => {
             const canvas = document.getElementById('live2dcanvas');
             if (canvas) {
@@ -110,13 +98,11 @@
             }
         }, 100);
 
-        // --- Event Listeners ---
         form.addEventListener('submit', handleFormSubmit);
         audioPlayer.addEventListener('play', () => { if (live2dCanvas) live2dCanvas.classList.add('is-speaking'); });
         audioPlayer.addEventListener('ended', () => { if (live2dCanvas) live2dCanvas.classList.remove('is-speaking'); });
         audioPlayer.addEventListener('pause', () => { if (live2dCanvas) live2dCanvas.classList.remove('is-speaking'); });
 
-        // --- Fungsi-Fungsi ---
         async function handleFormSubmit(event) {
             event.preventDefault();
             const userPrompt = input.value.trim();
